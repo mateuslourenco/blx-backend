@@ -12,7 +12,7 @@ app = FastAPI()
 
 @app.get('/')
 def home():
-    return {'BLX - Back-end API'}
+    return {'msg': 'BLX - Back-end API'}
 
 
 @app.post('/produtos')
