@@ -14,7 +14,7 @@ Base = declarative_base()
 
 
 def criar_db():
-    Base.metada.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
 
 def get_db():

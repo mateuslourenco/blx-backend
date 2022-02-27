@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean
-from blx_backend.src.infra.sqlalchemy.config.database import Base
+from src.infra.sqlalchemy.config.database import Base
 
 
 class Produto(Base):

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from blx_backend.src.schemas import schemas
-from blx_backend.src.infra.sqlalchemy.models import models
+from src.schemas import schemas
+from src.infra.sqlalchemy.models import models
 
 
 class RepositorioProduto:

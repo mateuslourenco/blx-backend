@@ -7,17 +7,14 @@ class Usuario(BaseModel):
     id: Optional[str] = None
     nome: str
     telefone: str
-    minhas_vendas: List[Pedido]
-    meus_pedidos: List[Pedido]
-    meus_produtos: List[Produto]
 
 
 class Produto(BaseModel):
     id: Optional[str] = None
     nome: str
-    detalhe: str
+    detalhes: str
     preco: float
-    diponivel: bool = False
+    disponivel: bool = False
 
     class Config:
         orm_mode = True
