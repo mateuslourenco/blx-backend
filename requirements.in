@@ -1,3 +1,5 @@
 fastapi[all]
 uvicorn
-SQLAlchemy
+SQLAlchemy[all]
+python-decouple
+psycopg2-binary[all]
