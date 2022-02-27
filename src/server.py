@@ -10,6 +10,11 @@ criar_db()
 app = FastAPI()
 
 
+@app.get('/')
+def home():
+    return {'BLX - Back-end API'}
+
+
 @app.post('/produtos')
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
