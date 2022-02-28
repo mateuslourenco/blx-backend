@@ -3,3 +3,4 @@ uvicorn
 SQLAlchemy[all]
 python-decouple
 psycopg2-binary[all]
+alembic[all]
