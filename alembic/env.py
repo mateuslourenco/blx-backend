@@ -10,7 +10,27 @@ from alembic import context
 from src.infra.sqlalchemy.config import database
 from src.infra.sqlalchemy.models.models import *
 
+# ---------------- added code here -------------------------#
+import os
+import sys
+from dotenv import load_dotenv
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+sys.path.append(BASE_DIR)
+# ------------------------------------------------------------#
+
 config = context.config
+
+# ---------------- added code here -------------------------#
+# this will overwrite the ini-file sqlalchemy.url path
+# with the path given in the config of the main code
+db_url = os.environ["DATABASE_URL"]
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+config.set_main_option("sqlalchemy.url", db_url)
+# ------------------------------------------------------------#
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
