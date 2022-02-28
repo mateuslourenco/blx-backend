@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
+from starlette import status
 
 from src.infra.sqlalchemy.config.database import get_db, criar_db
 from src.schemas.schemas import Produto
@@ -15,13 +16,13 @@ def home():
     return {'msg': 'BLX - Back-end API'}
 
 
-@app.post('/produtos')
+@app.post('/produtos', status_code=status.HTTP_201_CREATED)
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
 
 
-@app.get('/produtos')
+@app.get('/produtos', status_code=status.HTTP_200_OK)
 def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
