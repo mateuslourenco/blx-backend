@@ -39,6 +39,12 @@ def listar_produtos(db: Session = Depends(get_db)):
     return produtos
 
 
+@app.delete('/produtos/{id_produto}')
+def deletar_produto(id_produto: int, db: Session = Depends(get_db)):
+    RepositorioProduto(db).remover(id_produto)
+    return {"msg": "produto deletado"}
+
+
 # USUARIOS
 
 
