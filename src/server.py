@@ -27,10 +27,11 @@ def criar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
     return produto_criado
 
 
-@app.put('/produtos', status_code=status.HTTP_201_CREATED)
-def editar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
-    RepositorioProduto(db).editar(produto)
-    return {"mensagem": "produto atualizado"}
+@app.put('/produtos/{id_produto}', status_code=status.HTTP_201_CREATED, response_model=schemas.ProdutoSimples)
+def editar_produto(id_produto: int, produto: schemas.Produto, db: Session = Depends(get_db)):
+    RepositorioProduto(db).editar(id_produto, produto)
+    produto.id = id_produto
+    return produto
 
 
 @app.get('/produtos', status_code=status.HTTP_200_OK, response_model=List[schemas.Produto])
