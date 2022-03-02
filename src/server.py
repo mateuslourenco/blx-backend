@@ -5,9 +5,9 @@ from sqlalchemy.orm import Session
 from starlette import status
 
 from src.infra.sqlalchemy.config.database import get_db, criar_db
-from src.infra.sqlalchemy.repositorios.usuario import RepositorioUsuario
+from src.infra.sqlalchemy.repositorios.repositorio_usuario import RepositorioUsuario
 from src.schemas import schemas
-from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
+from src.infra.sqlalchemy.repositorios.repositorio_produto import RepositorioProduto
 
 criar_db()
 
@@ -25,6 +25,12 @@ def home():
 def criar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
+
+
+@app.put('/produtos', status_code=status.HTTP_201_CREATED)
+def editar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
+    RepositorioProduto(db).editar(produto)
+    return {"mensagem": "produto atualizado"}
 
 
 @app.get('/produtos', status_code=status.HTTP_200_OK, response_model=List[schemas.Produto])

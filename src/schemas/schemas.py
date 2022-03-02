@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic.main import BaseModel
 
@@ -8,7 +8,7 @@ class Usuario(BaseModel):
     nome: str
     senha: str
     telefone: str
-    # produtos: List[produtos] = []
+    # produtos: List[Produto] = []
 
     class Config:
         orm_mode = True
