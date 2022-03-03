@@ -1,15 +1,6 @@
-from typing import List
+from fastapi import FastAPI
 
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
-from starlette import status
-
-from src.infra.sqlalchemy.config.database import get_db, criar_db
-from src.infra.sqlalchemy.repositorios.repositorio_usuario import RepositorioUsuario
-from src.schemas import schemas
-from src.infra.sqlalchemy.repositorios.repositorio_produto import RepositorioProduto
-
-criar_db()
+from src.routers import rotas_produtos, rotas_usuarios
 
 app = FastAPI()
 
@@ -18,44 +9,10 @@ app = FastAPI()
 def home():
     return {'msg': 'BLX - Back-end API'}
 
-# PRODUTOS
+
+# Rotas de produtos
+app.include_router(rotas_produtos.router)
 
 
-@app.post('/produtos', status_code=status.HTTP_201_CREATED, response_model=schemas.Produto)
-def criar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
-    produto_criado = RepositorioProduto(db).criar(produto)
-    return produto_criado
-
-
-@app.put('/produtos/{id_produto}', status_code=status.HTTP_201_CREATED, response_model=schemas.ProdutoSimples)
-def editar_produto(id_produto: int, produto: schemas.Produto, db: Session = Depends(get_db)):
-    RepositorioProduto(db).editar(id_produto, produto)
-    produto.id = id_produto
-    return produto
-
-
-@app.get('/produtos', status_code=status.HTTP_200_OK, response_model=List[schemas.Produto])
-def listar_produtos(db: Session = Depends(get_db)):
-    produtos = RepositorioProduto(db).listar()
-    return produtos
-
-
-@app.delete('/produtos/{id_produto}')
-def deletar_produto(id_produto: int, db: Session = Depends(get_db)):
-    RepositorioProduto(db).remover(id_produto)
-    return {"msg": "produto deletado"}
-
-
-# USUARIOS
-
-
-@app.post('/usuarios', status_code=status.HTTP_201_CREATED, response_model=schemas.Usuario)
-def criar_usuario(usuario: schemas.Usuario, db: Session = Depends(get_db)):
-    usuario_criado = RepositorioUsuario(db).criar(usuario)
-    return usuario_criado
-
-
-@app.get('/usuarios', status_code=status.HTTP_200_OK, response_model=List[schemas.Usuario])
-def listar_usuarios(db: Session = Depends(get_db)):
-    usuarios = RepositorioUsuario(db).listar()
-    return usuarios
+# Rotas de usuarios
+app.include_router(rotas_usuarios.router)
