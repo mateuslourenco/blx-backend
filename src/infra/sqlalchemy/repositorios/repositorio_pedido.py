@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.infra.sqlalchemy.models import models
@@ -20,3 +21,8 @@ class RepositorioPedido:
         self.session.commit()
         self.session.refresh(db_pedido)
         return db_pedido
+
+    def exibir(self, id_pedido: int):
+        consulta = select(models.Pedido).where(models.Pedido.id == id_pedido)
+        produto = self.session.execute(consulta).first()
+        return produto

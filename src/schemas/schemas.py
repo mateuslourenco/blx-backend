@@ -54,5 +54,3 @@ class Pedido(BaseModel):
     local_entrega: str
     entrega_ou_retirada: str
     observacoes: Optional[str] = 'Sem observações'
-
-
