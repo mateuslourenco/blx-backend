@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from src.schemas import schemas
@@ -27,6 +27,14 @@ def editar_produto(id_produto: int, produto: schemas.Produto, db: Session = Depe
 def listar_produtos(db: Session = Depends(get_db)):
     produtos = RepositorioProduto(db).listar()
     return produtos
+
+
+@router.get('/produtos/{id_produto}')
+def exibir_produto(id_produto: int, db: Session = Depends(get_db)):
+    produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
+    if not produto_localizado:
+        raise HTTPException(status_code=404, detail='Produto não localizado')
+    return produto_localizado
 
 
 @router.delete('/produtos/{id_produto}')
