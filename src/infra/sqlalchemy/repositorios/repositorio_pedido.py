@@ -26,3 +26,8 @@ class RepositorioPedido:
         consulta = select(models.Pedido).where(models.Pedido.id == id_pedido)
         produto = self.session.execute(consulta).first()
         return produto
+
+    def listar_pedidos_usuario(self, id_usuario: int):
+        consulta = select(models.Pedido).where(models.Pedido.usuario_id == id_usuario)
+        pedidos = self.session.execute(consulta).scalars().all()
+        return pedidos

@@ -22,3 +22,11 @@ def exibir_pedido(id_pedido: int, db: Session = Depends(get_db)):
     if not pedido_localizado:
         raise HTTPException(status_code=404, detail='Pedido não localizado')
     return pedido_localizado
+
+
+@router.get('/{id_usuario}/pedidos')
+def listar_pedidos_por_usuario(id_usuario: int, db: Session = Depends(get_db)):
+    pedidos_localizados = RepositorioPedido(db).listar_pedidos_usuario(id_usuario)
+    if not pedidos_localizados:
+        raise HTTPException(status_code=404, detail='Usuario sem pedidos realizados')
+    return pedidos_localizados
