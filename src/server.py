@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.routers import rotas_produtos, rotas_usuarios, rotas_pedidos
+from src.routers import rotas_produtos, rotas_auth, rotas_pedidos
 
 app = FastAPI()
 
@@ -14,8 +14,8 @@ def home():
 app.include_router(rotas_produtos.router)
 
 
-# Rotas de usuarios
-app.include_router(rotas_usuarios.router)
+# Rotas de segurança
+app.include_router(rotas_auth.router, prefix='/auth')
 
 # Rotas de pedidos
 app.include_router(rotas_pedidos.router)

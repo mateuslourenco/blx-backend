@@ -28,6 +28,7 @@ class UsuarioSimples(BaseModel):
     id: int
     nome: str
     telefone: str
+    produtos: List[ProdutoSimples] = []
 
     class Config:
         orm_mode = True
