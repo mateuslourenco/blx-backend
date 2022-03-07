@@ -10,6 +10,8 @@ from src.infra.sqlalchemy.repositorios.repositorio_produto import RepositorioPro
 
 router = APIRouter()
 
+PRODUTO_NAO_LOCALIZADO = HTTPException(status_code=404, detail='Produto não localizado')
+
 
 @router.post('/produtos', status_code=status.HTTP_201_CREATED, response_model=schemas.Produto)
 def criar_produto(produto: schemas.Produto, usuario: schemas.Usuario = Depends(obter_usuario_logado),
@@ -23,6 +25,10 @@ def criar_produto(produto: schemas.Produto, usuario: schemas.Usuario = Depends(o
 def editar_produto(id_produto: int, produto: schemas.Produto, usuario: schemas.Usuario = Depends(obter_usuario_logado),
                    db: Session = Depends(get_db)):
     produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
+
+    if not produto_localizado:
+        raise PRODUTO_NAO_LOCALIZADO
+
     if not produto_localizado.usuario_id == usuario.id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Usuário não autorizado')
     RepositorioProduto(db).editar(id_produto, produto)
@@ -40,7 +46,7 @@ def listar_produtos(db: Session = Depends(get_db)):
 def exibir_produto(id_produto: int, db: Session = Depends(get_db)):
     produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
     if not produto_localizado:
-        raise HTTPException(status_code=404, detail='Produto não localizado')
+        raise PRODUTO_NAO_LOCALIZADO
     return produto_localizado
 
 
@@ -51,7 +57,7 @@ def deletar_produto(id_produto: int, usuario: schemas.Usuario = Depends(obter_us
     produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
 
     if not produto_localizado:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Produto não localizado')
+        raise PRODUTO_NAO_LOCALIZADO
 
     if not produto_localizado.usuario_id == usuario.id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Usuário não autorizado')
