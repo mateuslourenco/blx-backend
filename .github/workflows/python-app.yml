@@ -37,6 +37,9 @@ jobs:
     - name: Copy .env
       run: |
         cp contrib/env-sample .env
+    - name: Run migrations
+      run: |
+        alembic upgrade head
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
