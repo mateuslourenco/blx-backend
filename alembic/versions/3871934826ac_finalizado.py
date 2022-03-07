@@ -1,8 +1,8 @@
-"""Tamanhos
+"""finalizado
 
-Revision ID: be076c2ac287
-Revises: ffb0758beefb
-Create Date: 2022-02-28 18:50:31.196572
+Revision ID: 3871934826ac
+Revises: 
+Create Date: 2022-03-07 03:46:38.107669
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'be076c2ac287'
-down_revision = 'ffb0758beefb'
+revision = '3871934826ac'
+down_revision = None
 branch_labels = None
 depends_on = None
 
