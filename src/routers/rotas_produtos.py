@@ -45,6 +45,16 @@ def exibir_produto(id_produto: int, db: Session = Depends(get_db)):
 
 
 @router.delete('/produtos/{id_produto}')
-def deletar_produto(id_produto: int, db: Session = Depends(get_db)):
+def deletar_produto(id_produto: int, usuario: schemas.Usuario = Depends(obter_usuario_logado),
+                    db: Session = Depends(get_db)):
+
+    produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
+
+    if not produto_localizado:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Produto não localizado')
+
+    if not produto_localizado.usuario_id == usuario.id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Usuário não autorizado')
+
     RepositorioProduto(db).remover(id_produto)
     return {"msg": "produto deletado"}
