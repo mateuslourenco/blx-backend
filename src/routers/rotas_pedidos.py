@@ -34,6 +34,10 @@ def exibir_pedido(id_pedido: int, usuario: schemas.Usuario = Depends(obter_usuar
     pedido_localizado = RepositorioPedido(db).exibir(id_pedido)
     if not pedido_localizado:
         raise HTTPException(status_code=404, detail='Pedido não localizado')
+
+    if not pedido_localizado.usuario.id == usuario.id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Usuário não autorizado')
+
     return pedido_localizado
 
 
