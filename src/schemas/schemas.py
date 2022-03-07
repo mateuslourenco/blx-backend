@@ -75,7 +75,7 @@ class Pedido(BaseModel):
     entrega_ou_retirada: str
     observacoes: Optional[str] = 'Sem observações'
 
-    usuario: Optional[UsuarioSimples]
+    usuario: Optional[UsuarioSemProdutos]
     produto: Optional[ProdutoSimples]
 
     class Config:
