@@ -19,8 +19,10 @@ https://blx-backend-api.herokuapp.com/docs
 
 ```
 git clone https://github.com/mateuslourenco/blx-backend
+cd blx-backend
 pip install pip-tools
 pip-sync requirements.txt dev-requirements.txt
 cp contrib/env-sample .env
 alembic upgrade head     
+uvicorn src.server:app --reload --reload-dir=src 
 ```
