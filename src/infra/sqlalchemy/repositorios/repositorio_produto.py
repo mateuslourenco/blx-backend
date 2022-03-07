@@ -26,7 +26,7 @@ class RepositorioProduto:
 
     def listar_por_id(self, id_produto: int):
         consulta = select(models.Produto).where(models.Produto.id == id_produto)
-        produto = self.session.execute(consulta).first()
+        produto = self.session.execute(consulta).scalars().first()
         return produto
 
     def editar(self, id_produto, produto: schemas.Produto):

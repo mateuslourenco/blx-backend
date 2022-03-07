@@ -3,6 +3,7 @@ from typing import List
 from fastapi import APIRouter, status, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from src.routers.auth_utils import obter_usuario_logado
 from src.schemas import schemas
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.sqlalchemy.repositorios.repositorio_produto import RepositorioProduto
@@ -11,7 +12,9 @@ router = APIRouter()
 
 
 @router.post('/produtos', status_code=status.HTTP_201_CREATED, response_model=schemas.Produto)
-def criar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
+def criar_produto(produto: schemas.Produto, usuario: schemas.Usuario = Depends(obter_usuario_logado),
+                  db: Session = Depends(get_db)):
+    produto.usuario_id = usuario.id
     produto_criado = RepositorioProduto(db).criar(produto)
     return produto_criado
 
