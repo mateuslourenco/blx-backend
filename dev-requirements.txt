@@ -6,8 +6,26 @@
 #
 attrs==21.4.0
     # via pytest
+certifi==2021.10.8
+    # via
+    #   -c requirements.txt
+    #   requests
+charset-normalizer==2.0.12
+    # via
+    #   -c requirements.txt
+    #   requests
+codecov==2.1.12
+    # via -r dev-requirements.in
+coverage[toml]==6.3.2
+    # via
+    #   codecov
+    #   pytest-cov
 flake8==4.0.1
     # via -r dev-requirements.in
+idna==3.3
+    # via
+    #   -c requirements.txt
+    #   requests
 iniconfig==1.1.1
     # via pytest
 mccabe==0.6.1
@@ -25,6 +43,20 @@ pyflakes==2.4.0
 pyparsing==3.0.7
     # via packaging
 pytest==7.0.1
+    # via
+    #   -r dev-requirements.in
+    #   pytest-cov
+pytest-cov==3.0.0
     # via -r dev-requirements.in
+requests==2.27.1
+    # via
+    #   -c requirements.txt
+    #   codecov
 tomli==2.0.1
-    # via pytest
+    # via
+    #   coverage
+    #   pytest
+urllib3==1.26.8
+    # via
+    #   -c requirements.txt
+    #   requests

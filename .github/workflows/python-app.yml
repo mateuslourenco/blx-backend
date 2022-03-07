@@ -46,3 +46,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Posting covarage
+      env:
+        super_secret: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        codecov
