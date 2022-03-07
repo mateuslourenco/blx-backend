@@ -47,6 +47,16 @@ class Produto(BaseModel):
         orm_mode = True
 
 
+class LoginData(BaseModel):
+    telefone: str
+    senha: str
+
+
+class LoginSucesso(BaseModel):
+    usuario: UsuarioSimples
+    token: str
+
+
 class Pedido(BaseModel):
     id: Optional[int] = None
     usuario_id: Optional[int]

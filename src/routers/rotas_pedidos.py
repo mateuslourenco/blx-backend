@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.sqlalchemy.repositorios.repositorio_pedido import RepositorioPedido
+from src.routers.auth_utils import obter_usuario_logado
 from src.schemas import schemas
 
 router = APIRouter()
@@ -26,9 +27,9 @@ def exibir_pedido(id_pedido: int, db: Session = Depends(get_db)):
     return pedido_localizado
 
 
-@router.get('/pedidos/{id_usuario}/compras', response_model=List[schemas.Pedido])
-def listar_pedidos_por_usuario(id_usuario: int, db: Session = Depends(get_db)):
-    pedidos_localizados = RepositorioPedido(db).listar_pedidos_usuario(id_usuario)
+@router.get('/pedidos', response_model=List[schemas.Pedido])
+def listar_pedidos_por_usuario(usuario: schemas.Usuario = Depends(obter_usuario_logado), db: Session = Depends(get_db)):
+    pedidos_localizados = RepositorioPedido(db).listar_pedidos_usuario(usuario.id)
     if not pedidos_localizados:
         raise HTTPException(status_code=404, detail='Usuario sem pedidos realizados')
     return pedidos_localizados
