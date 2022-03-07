@@ -1,10 +1,10 @@
-
 # CONFIG
 from datetime import datetime, timedelta
 
+from decouple import config
 from jose import jwt
 
-SECRET_KEY = 'chave secreta'
+SECRET_KEY = config('SECRET_KEY')
 ALGORITHM = 'HS256'
 EXPIRES_IN = 3000
 
