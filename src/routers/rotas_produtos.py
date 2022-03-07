@@ -19,8 +19,12 @@ def criar_produto(produto: schemas.Produto, usuario: schemas.Usuario = Depends(o
     return produto_criado
 
 
-@router.put('/produtos/{id_produto}', status_code=status.HTTP_201_CREATED, response_model=schemas.ProdutoSimples)
-def editar_produto(id_produto: int, produto: schemas.Produto, db: Session = Depends(get_db)):
+@router.put('/produtos/{id_produto}', response_model=schemas.ProdutoSimples)
+def editar_produto(id_produto: int, produto: schemas.Produto, usuario: schemas.Usuario = Depends(obter_usuario_logado),
+                   db: Session = Depends(get_db)):
+    produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
+    if not produto_localizado.usuario_id == usuario.id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Usuário não autorizado')
     RepositorioProduto(db).editar(id_produto, produto)
     produto.id = id_produto
     return produto
