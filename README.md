@@ -1,6 +1,6 @@
 # blx-backend
 [![Python application](https://github.com/mateuslourenco/blx-backend/actions/workflows/python-app.yml/badge.svg)](https://github.com/mateuslourenco/blx-backend/actions/workflows/python-app.yml)
-
+[![codecov](https://codecov.io/gh/mateuslourenco/blx-backend/branch/main/graph/badge.svg?token=18LIIGTUDQ)](https://codecov.io/gh/mateuslourenco/blx-backend)
 
 ## Descrição 
 BLX Backend é uma Rest API de marketplace construída com FastAPI. 
