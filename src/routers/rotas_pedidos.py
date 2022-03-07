@@ -12,7 +12,15 @@ router = APIRouter()
 
 
 @router.post('/pedidos', status_code=status.HTTP_201_CREATED, response_model=schemas.Pedido)
-def fazer_pedido(pedido: schemas.Pedido, db: Session = Depends(get_db)):
+def fazer_pedido(pedido: schemas.Pedido, usuario: schemas.Usuario = Depends(obter_usuario_logado),
+                 db: Session = Depends(get_db)):
+
+    produto_localizado = RepositorioPedido(db).exibir(pedido.produto_id)
+
+    if not produto_localizado:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Produto não localizado')
+
+    pedido.usuario_id = usuario.id
     pedido_criado = RepositorioPedido(db).criar(pedido)
     pedido_criado.usuario_id = pedido.usuario_id
     pedido_criado.produto_id = pedido.produto_id
