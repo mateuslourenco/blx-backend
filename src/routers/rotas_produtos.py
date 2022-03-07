@@ -42,7 +42,7 @@ def listar_produtos(db: Session = Depends(get_db)):
     return produtos
 
 
-@router.get('/produtos/{id_produto}')
+@router.get('/produtos/{id_produto}', response_model=schemas.Produto)
 def exibir_produto(id_produto: int, db: Session = Depends(get_db)):
     produto_localizado = RepositorioProduto(db).listar_por_id(id_produto)
     if not produto_localizado:
